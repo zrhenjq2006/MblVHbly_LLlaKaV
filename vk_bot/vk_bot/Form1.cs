@@ -14,7 +14,7 @@ namespace vk_bot
 {
     public partial class Form1 : Form
     {
-        string access_token;
+        public static string access_token;
         public Form1()
         {
             InitializeComponent();
@@ -31,15 +31,15 @@ namespace vk_bot
                 access_token = access_token.Remove(0, pos);
                 pos = access_token.IndexOf("&");
                 access_token = access_token.Remove(pos);
-                string request = "https://api.vk.com/method/users.get?user_ids=56929156&fields=photo_100,bdate&access_token="  +access_token+ "&v=5.87";
+                string request = "https://api.vk.com/method/users.get?fields=photo_100,bdate&access_token="  +access_token+ "&v=5.87";
+                https://api.vk.com/method/likes.add?owner_id=-24299135&item_id=387996&type=post&access_token=cb34c33364ffca3e65783fd7a40c8f7b0b5f77a1a84ee732f36fc38704656a8352ed1e8db359f93f0ddc9&v=5.92 
                 //string request2 = "https://api.vk.com/method/groups.get?user_id=56929156&fields=photo_100&extended=1&access_token=" + access_token + "&v=5.87";
                 WebClient client = new WebClient();
                 //string answer = client.DownloadString(request);
                 string answer = Encoding.UTF8.GetString( client.DownloadData(request));
                 User user = JsonConvert.DeserializeObject<User>(answer);
-
-                AvatarPictureBox.Load(user.response[0].photo_100);
-                FirstNameLabel.Text = user.response[0].first_name;
+                    AvatarPictureBox.Load(user.response[0].photo_100);
+                    FirstNameLabel.Text = user.response[0].first_name;             
             }
         }
 
@@ -59,5 +59,15 @@ namespace vk_bot
             AutoMessageForm amfrm = new AutoMessageForm();
             amfrm.ShowDialog();
         }
+
+        private void AButton_Click(object sender, EventArgs e)
+        {
+            AButton frm = new AButton();
+            frm.access_token = access_token;
+            frm.ShowDialog();
+
+
+        }
     }
 }
+
